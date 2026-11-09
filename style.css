@@ -5,5 +5,14 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.mist{transform:none}}
 
 /* Desktop revision: long edition title and a clear welcome-message hierarchy. */
+.blessing-banner{position:fixed;z-index:55;top:44%;left:0;right:0;height:210px;display:flex;align-items:center;justify-content:center;pointer-events:none;background:linear-gradient(90deg,transparent,#080604d9 15%,#040302ed 50%,#080604d9 85%,transparent);opacity:0}
+.blessing-banner:before,.blessing-banner:after{content:'';position:absolute;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#d3ad5947,transparent)}
+.blessing-banner:before{top:23px}.blessing-banner:after{bottom:23px}
+.blessing-banner>span{font:82px/1 Georgia,'Times New Roman',serif;font-weight:normal;letter-spacing:.14em;padding-left:.14em;color:#d8b15b;text-shadow:0 1px 2px #2c1b08,0 0 28px #d4a44536}
+.blessing-banner.is-showing{animation:blessing-band 3.8s linear both}.blessing-banner.is-showing>span{animation:blessing-letters 3.8s ease-out both}
+@keyframes blessing-band{0%{opacity:0}14%{opacity:1}77%{opacity:1}100%{opacity:0}}
+@keyframes blessing-letters{0%{opacity:0;transform:scale(.96);filter:blur(6px);letter-spacing:.2em}20%{opacity:1;filter:blur(0);letter-spacing:.14em}78%{opacity:1}100%{opacity:0;transform:scale(1.045)}}
+.blessing-banner.has-reduced-motion{opacity:1;animation:none}.blessing-banner.has-reduced-motion>span{animation:none}
+@media(prefers-reduced-motion:reduce){.blessing-banner.is-showing,.blessing-banner.is-showing>span{animation:none;opacity:1}}
 .brand{flex-shrink:0}.topbar-right{flex:1;justify-content:flex-end;align-items:center}.edition-label{display:block;max-width:720px;font-size:13px;line-height:1.65;letter-spacing:.12em;text-align:right;color:#d2d7ce}.sound-toggle{flex-shrink:0;white-space:nowrap}
 #welcomeOverlay .sigil{width:42px;height:60px;margin-bottom:13px}#welcomeOverlay .welcome-aside{font:16px/1.5 Georgia,serif;color:#99a8a1;margin:14px 0 20px}#welcomeOverlay .welcome-question{font:34px/1.35 Georgia,serif;font-weight:600;color:#f1f0e2;margin:10px 0 29px;letter-spacing:0}

@@ -1,0 +1,53 @@
+.boss-entrance{position:fixed;inset:0;z-index:60;isolation:isolate;overflow:hidden;min-width:1100px;background:#020507;color:#e5dfc9;text-align:center;opacity:1;transition:opacity .7s ease}
+.boss-entrance.is-departing{opacity:0}
+.boss-entrance:before,.boss-entrance:after{content:'';position:absolute;z-index:12;left:0;right:0;height:6vh;background:#000;pointer-events:none}
+.boss-entrance:before{top:0}.boss-entrance:after{bottom:0}
+.entrance-backdrop{position:absolute;inset:-3%;background:#121a20 url('assets/battle-arena.png') center 42%/cover no-repeat;filter:grayscale(.7) brightness(.25) blur(2px);transform:scale(1.05)}
+.entrance-vignette{position:absolute;inset:0;z-index:8;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 15%,#01040796 67%,#000 100%),linear-gradient(#0008,transparent 25%,transparent 75%,#000)}
+.entrance-stage{position:absolute;inset:0}
+.entrance-halo{position:absolute;left:50%;top:49%;width:70vw;height:75vh;transform:translate(-50%,-50%);background:radial-gradient(ellipse,#b5bd8f16,transparent 62%);opacity:0;transition:opacity 2s}
+.is-arriving .entrance-halo{opacity:1}
+.is-revealed .entrance-halo{background:radial-gradient(ellipse,#d7ae5b33,transparent 65%)}
+.entrance-rune{position:absolute;left:50%;top:48%;width:49vh;height:49vh;transform:translate(-50%,-50%) rotate(-12deg);border:1px solid #b4b49330;outline:1px solid #b4b49320;outline-offset:18px;border-radius:50%;box-shadow:0 0 45px #bec6a00c,inset 0 0 45px #bec6a00c;opacity:0;transition:opacity 2s}
+.entrance-rune:before,.entrance-rune:after{content:'';position:absolute;inset:12%;border:1px solid #a3afa836;transform:rotate(45deg)}
+.entrance-rune:after{transform:rotate(0deg)}
+.is-arriving .entrance-rune{opacity:1}
+.entrance-figure{position:absolute;left:50%;bottom:10vh;width:min(1020px,90vw);height:80vh;margin:0;transform:translate(-50%,70px) scale(.91);opacity:0;transition:opacity 1.4s ease,transform 4.2s cubic-bezier(.15,.55,.2,1)}
+.entrance-figure img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;filter:brightness(0) drop-shadow(0 0 2px #bcc8c669) drop-shadow(0 0 23px #b9c5bb0a);transition:filter 1.15s ease;mask-image:linear-gradient(#000 0 88%,transparent 100%);user-select:none;-webkit-user-drag:none}
+.is-arriving .entrance-figure{opacity:1;transform:translate(-50%,0) scale(1)}
+.is-revealed .entrance-figure img{filter:brightness(.93) contrast(1.12) saturate(.82) drop-shadow(0 10px 30px #0009)}
+.entrance-smoke{position:absolute;z-index:5;left:-30%;right:-30%;bottom:-14%;height:45%;pointer-events:none;opacity:0;filter:blur(25px);background:radial-gradient(ellipse at 22% 58%,#c3cbbb40,transparent 27%),radial-gradient(ellipse at 67% 46%,#a7b8bd3d,transparent 29%),radial-gradient(ellipse at 44% 75%,#8d9b9959,transparent 35%);transition:opacity 2s}
+.entrance-smoke-two{bottom:-9%;transform:scaleX(-1);filter:blur(37px);opacity:0}
+.is-arriving .entrance-smoke{opacity:.8;animation:entrance-fog 7s ease-in-out both}
+.is-arriving .entrance-smoke-two{opacity:.5;animation:entrance-fog-two 8s ease-in-out both}
+.entrance-omen{position:absolute;z-index:9;top:10vh;left:0;right:0;margin:0;font:23px/1.65 Georgia,serif;font-weight:normal;letter-spacing:.23em;text-transform:uppercase;color:#b9c6c1;text-shadow:0 2px 12px #000;opacity:0}
+.is-playing .entrance-omen{animation:entrance-omen-in 2s ease .15s both}
+.entrance-omen span{display:block;font-size:31px;letter-spacing:.14em;color:#e1e5d7}
+.entrance-name{position:absolute;z-index:10;left:0;right:0;bottom:14vh;opacity:0;pointer-events:none;color:#e9d4a1;text-shadow:0 3px 2px #1d100c,0 0 24px #b8873c42}
+.entrance-name:before,.entrance-name:after{content:'';display:block;width:55%;height:1px;margin:17px auto;background:linear-gradient(90deg,transparent,#e2c58c,transparent)}
+.entrance-name strong{display:block;font:76px/1.1 Georgia,serif;font-weight:normal;letter-spacing:.13em;padding-left:.13em}
+.entrance-name em{display:block;margin-top:18px;font:18px Georgia,serif;letter-spacing:.18em;font-style:normal;color:#dfd4b8}
+.is-revealed .entrance-name{animation:entrance-name-hit 1.15s cubic-bezier(.12,.55,.24,1) both}
+.is-revealed .entrance-stage{animation:entrance-impact .55s ease-out both}
+.entrance-flash{position:absolute;z-index:11;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,#fff3ce,#b9cdd633 65%,transparent);opacity:0}
+.is-revealed .entrance-flash{animation:entrance-flash .8s ease-out both}
+.entrance-shockwave{position:absolute;z-index:6;left:50%;top:50%;width:28vh;height:28vh;border:2px solid #ebd4a14d;border-radius:50%;transform:translate(-50%,-50%);opacity:0;pointer-events:none}
+.is-revealed .entrance-shockwave{animation:entrance-shockwave 1.2s ease-out both}
+.entrance-embers{position:absolute;z-index:7;inset:0;pointer-events:none;opacity:0;transition:opacity .6s}
+.is-revealed .entrance-embers{opacity:1}
+.entrance-embers i{position:absolute;left:var(--x);bottom:-2%;width:2px;height:7px;background:#eac384;box-shadow:0 0 8px #d7aa58;opacity:0;animation:entrance-ember calc(2.3s + var(--i)*.04s) ease-out infinite;animation-delay:calc(var(--i)*.095s)}
+.entrance-skip{position:absolute;z-index:14;top:20px;right:30px;border:1px solid #b2b6a63f;background:#05090bb3;color:#9ca69c;padding:10px 14px;font:10px Georgia,serif;letter-spacing:.14em;cursor:pointer}
+.entrance-skip:hover{border-color:#d3ccb3;color:#ece1c4}
+.entrance-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@keyframes entrance-omen-in{from{opacity:0;filter:blur(7px);transform:translateY(8px)}to{opacity:1;filter:blur(0);transform:translateY(0)}}
+@keyframes entrance-fog{from{transform:translateX(-4%) scale(1.02)}to{transform:translateX(7%) scale(1.15)}}
+@keyframes entrance-fog-two{from{transform:translateX(5%) scaleX(-1)}to{transform:translateX(-6%) scaleX(-1.15)}}
+@keyframes entrance-name-hit{0%{opacity:0;transform:scale(1.22);filter:blur(10px)}18%{opacity:1;filter:blur(0)}55%{transform:scale(.99)}100%{opacity:1;transform:scale(1)}}
+@keyframes entrance-impact{0%,100%{transform:translate(0,0)}15%{transform:translate(9px,-5px)}30%{transform:translate(-7px,4px)}47%{transform:translate(5px,-2px)}70%{transform:translate(-2px,1px)}}
+@keyframes entrance-flash{0%{opacity:.6}18%{opacity:0}100%{opacity:0}}
+@keyframes entrance-shockwave{from{opacity:.7;transform:translate(-50%,-50%) scale(.3)}to{opacity:0;transform:translate(-50%,-50%) scale(5)}}
+@keyframes entrance-ember{0%{opacity:0;transform:translate(0,0)}15%{opacity:.85}100%{opacity:0;transform:translate(35px,-65vh) rotate(30deg)}}
+.boss-entrance.has-reduced-motion *{animation:none!important;transition:none!important}
+.boss-entrance.has-reduced-motion .entrance-omen,.boss-entrance.has-reduced-motion .entrance-name{opacity:1}
+.boss-entrance.has-reduced-motion .entrance-flash,.boss-entrance.has-reduced-motion .entrance-embers{display:none}
+@media(prefers-reduced-motion:reduce){.boss-entrance,.boss-entrance *{animation:none!important;transition:none!important}}

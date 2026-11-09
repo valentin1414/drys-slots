@@ -4,14 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#151b1e">
-  <meta name="description" content="Артём [зачёркнуто] → Андрей. Нарочито передаренное Skyrim-казино ко дню рождения Андрея.">
-  <title>А̶р̶т̶ё̶м̶ → АНДРЕЙ | Skyrim 2 Royale</title>
+  <meta name="description" content="&#8203;">
+  <meta property="og:title" content="АНДРЕЙ | Skyrim 2 Royale">
+  <meta property="og:description" content="&#8203;">
+  <meta name="twitter:title" content="АНДРЕЙ | Skyrim 2 Royale">
+  <meta name="twitter:description" content="&#8203;">
+  <title>АНДРЕЙ | Skyrim 2 Royale</title>
   <link rel="icon" href="assets/sigil.svg" type="image/svg+xml">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="battle.css">
+  <link rel="stylesheet" href="boss-intro.css">
   <script src="slot-engine.js" defer></script>
   <script src="battle-engine.js" defer></script>
   <script src="battle-ui.js" defer></script>
+  <script src="boss-intro.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -101,6 +107,7 @@
   </div>
 
   <div id="confetti" class="confetti" aria-hidden="true"></div>
+  <div class="blessing-banner" id="blessingBanner" role="status" aria-live="polite" aria-atomic="true" hidden><span>ДАРЫ ДЕВЯТИ</span></div>
 
   <div class="overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeAside">
     <div class="popup framed">
@@ -116,8 +123,30 @@
     </div>
   </div>
 
-  <div class="overlay collection-overlay" id="collectionOverlay" role="dialog" aria-modal="true" aria-labelledby="collectionTitle" aria-describedby="collectionCopy" hidden><div class="collection-popup framed"><div class="popup-kicker">ЗАДАНИЕ ВЫПОЛНЕНО · КОЛЛЕКЦИЯ 10 / 10</div><h2 id="collectionTitle">Вы собрали все карточки!</h2><p id="collectionCopy">Все 10 карточек теперь у тебя.</p><div class="collection-complete-grid" id="collectionCompleteGrid"></div><button id="enterBattle" class="popup-action" type="button">◇ &nbsp; ПРОДОЛЖИТЬ &nbsp; ◇</button></div></div>
-  <div class="battle-transition" id="battleTransition" role="status" aria-live="assertive" tabindex="-1" hidden><img src="assets/sigil.svg" alt="" width="70" height="100"><div class="transition-kicker">КОЛЛЕКЦИЯ СОБРАНА · 10 / 10</div><h2>Не все долги<br>измеряются в тенге.</h2><p>ЗАДАНИЕ ОБНОВЛЕНО</p><div class="transition-line" aria-hidden="true"><i></i></div></div>
+  <div class="overlay collection-overlay" id="collectionOverlay" role="dialog" aria-modal="true" aria-labelledby="collectionTitle" aria-describedby="collectionCopy" hidden>
+    <div class="collection-popup framed">
+      <div class="popup-kicker">ЗАДАНИЕ ВЫПОЛНЕНО · КОЛЛЕКЦИЯ 10 / 10</div>
+      <h2 id="collectionTitle">Вы собрали все карточки!</h2>
+      <p id="collectionCopy">Все 10 карточек теперь у тебя.</p>
+      <div class="collection-complete-grid" id="collectionCompleteGrid"></div>
+      <button id="enterBattle" class="popup-action" type="button">◇ &nbsp; ПРОДОЛЖИТЬ &nbsp; ◇</button>
+    </div>
+  </div>
+  <div class="boss-entrance" id="battleTransition" role="dialog" aria-modal="true" aria-labelledby="entranceOmen" tabindex="-1" hidden>
+    <div class="entrance-backdrop" aria-hidden="true"></div>
+    <div class="entrance-stage" aria-hidden="true">
+      <div class="entrance-halo"></div><div class="entrance-rune"></div>
+      <figure class="entrance-figure"><img src="assets/boss-merchant-cutout.png" alt="" draggable="false"></figure>
+      <div class="entrance-smoke"></div><div class="entrance-smoke entrance-smoke-two"></div>
+      <div class="entrance-shockwave"></div><div class="entrance-embers" id="entranceEmbers"></div>
+    </div>
+    <div class="entrance-vignette" aria-hidden="true"></div>
+    <h2 class="entrance-omen" id="entranceOmen">Приближается<span>что-то зловещее</span></h2>
+    <div class="entrance-name" aria-hidden="true"><strong>ПРОДАВЕЦ ГОВНА</strong><em>БРОСАЕТ ТЕБЕ ВЫЗОВ</em></div>
+    <div class="entrance-flash" aria-hidden="true"></div>
+    <div class="entrance-live" id="entranceAnnounce" role="status" aria-live="polite"></div>
+    <button class="entrance-skip" id="skipBossIntro" type="button">ПРОПУСТИТЬ</button>
+  </div>
 
   <div class="overlay round-failure-overlay" id="roundFailureOverlay" role="dialog" aria-modal="true" aria-labelledby="roundFailureTitle" aria-describedby="roundFailureCopy" hidden>
     <div class="round-failure-popup framed">

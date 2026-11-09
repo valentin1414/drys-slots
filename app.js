@@ -26,6 +26,7 @@ let balance = START, losses = 0, spinning = false;
 let lastPhotoButton = null;
 const discoveredPhotos = new Set();
 let confettiTimer = null;
+let blessingTimer = null;
 
 function nameSwap() {
   const span = document.createElement('span');
@@ -336,6 +337,23 @@ document.addEventListener('visibilitychange', () => {
 function clearParty() {
   clearTimeout(confettiTimer); confettiTimer = null;
   $('confetti').replaceChildren();
+  hideBlessingBanner();
+}
+
+function hideBlessingBanner() {
+  clearTimeout(blessingTimer); blessingTimer = null;
+  $('blessingBanner').hidden = true;
+  $('blessingBanner').classList.remove('is-showing');
+}
+
+function showBlessingBanner() {
+  hideBlessingBanner();
+  const banner=$('blessingBanner');
+  banner.hidden=false;
+  banner.classList.toggle('has-reduced-motion',reducedMotion.matches);
+  void banner.offsetWidth;
+  banner.classList.add('is-showing');
+  blessingTimer=setTimeout(hideBlessingBanner,reducedMotion.matches?1800:3800);
 }
 
 function playBattleSound(event,spellId) {
@@ -366,6 +384,40 @@ function playBattleSound(event,spellId) {
   }
 }
 
+function playBossEntranceSound(phase) {
+  if (!soundEnabled) return;
+  initAudio(); if (!audioCtx) return;
+  const t=audioCtx.currentTime, sources=[];
+  function tone(frequency,delay,duration,type,volume,endFrequency=frequency) {
+    const oscillator=audioCtx.createOscillator(),gain=audioCtx.createGain();
+    oscillator.type=type;oscillator.frequency.setValueAtTime(frequency,t+delay);
+    oscillator.frequency.exponentialRampToValueAtTime(endFrequency,t+delay+duration);
+    gain.gain.setValueAtTime(.0001,t+delay);
+    gain.gain.exponentialRampToValueAtTime(volume,t+delay+Math.min(.12,duration/4));
+    gain.gain.exponentialRampToValueAtTime(.0001,t+delay+duration);
+    oscillator.connect(gain);gain.connect(masterGain);oscillator.start(t+delay);oscillator.stop(t+delay+duration+.02);
+    oscillator.onended=()=>{oscillator.disconnect();gain.disconnect();};sources.push(oscillator);
+  }
+  function wind(duration,volume,cutoff) {
+    const length=Math.round(audioCtx.sampleRate*duration),buffer=audioCtx.createBuffer(1,length,audioCtx.sampleRate),data=buffer.getChannelData(0);
+    for(let index=0;index<length;index++)data[index]=(Math.random()*2-1)*Math.sin(Math.PI*index/length);
+    const source=audioCtx.createBufferSource(),filter=audioCtx.createBiquadFilter(),gain=audioCtx.createGain();
+    source.buffer=buffer;filter.type='lowpass';filter.frequency.value=cutoff;gain.gain.value=volume;
+    source.connect(filter);filter.connect(gain);gain.connect(masterGain);source.start(t);
+    source.onended=()=>{source.disconnect();filter.disconnect();gain.disconnect();};sources.push(source);
+  }
+  if(phase==='rumble') {
+    tone(38,0,3,'sine',.12,43);tone(57,.08,2.8,'triangle',.035,64);tone(80,.25,2.6,'sine',.027,180);wind(2.9,.065,360);
+  } else if(phase==='arrival') {
+    tone(62,0,.9,'sine',.14,29);tone(127,.02,.65,'triangle',.04,65);wind(.9,.08,650);
+  } else if(phase==='reveal') {
+    tone(79,0,1.1,'sine',.19,30);wind(.6,.13,2500);
+    [233,349.23,466.16,698.46].forEach((frequency,index)=>tone(frequency,.03+index*.04,1.55,'triangle',.031/(1+index*.35)));
+    [960,1710,2850].forEach((frequency,index)=>tone(frequency,.02,.55+index*.13,'sine',.035/(index+1)));
+  }
+  return () => sources.forEach(source=>{try{source.stop();}catch{}});
+}
+
 function showCollectionComplete() {
   if(gameStage!=='slots'||discoveredPhotos.size!==PHOTOS.length)return;
   gameStage='collection';stopMusic();closeOverlay(photoOverlay);
@@ -382,16 +434,20 @@ function showCollectionComplete() {
 
 async function startBattleEncounter() {
   if(gameStage!=='collection'||discoveredPhotos.size!==PHOTOS.length)return;
-  gameStage='transition';stopMusic();
+  gameStage='transition';stopMusic();hideBlessingBanner();
   closeOverlay(collectionOverlay);
   closeOverlay(photoOverlay);
-  $('battleTransition').hidden=false;syncModalState();$('battleTransition').focus({preventScroll:true});playBattleSound('intro');
+  syncModalState();
   const token=++transitionToken;
-  await new Promise(resolve=>setTimeout(resolve,reducedMotion.matches?250:1900));
-  if(token!==transitionToken)return;
-  $('slotsScreen').hidden=true;$('battleScreen').hidden=false;$('victoryScreen').hidden=true;$('battleTransition').hidden=true;
-  gameStage='battle';battleDefeated=false;musicStep=0;syncModalState();window.scrollTo(0,0);
+  const entrance=BossIntro.play({reducedMotion:reducedMotion.matches,sound:playBossEntranceSound});
+  // Prepare the battle under the opaque entrance, before its fade-out begins.
+  $('slotsScreen').hidden=true;$('battleScreen').hidden=false;$('victoryScreen').hidden=true;
+  battleDefeated=false;musicStep=0;window.scrollTo(0,0);
   BattleUI.start({photos:PHOTOS,reducedMotion:()=>reducedMotion.matches,sound:playBattleSound,onVictory:showVictoryScreen,onDefeat:()=>{battleDefeated=true;stopMusic();},onRetry:()=>{battleDefeated=false;startMusic();}});
+  const completed=await entrance;
+  if(!completed||token!==transitionToken)return;
+  gameStage='battle';syncModalState();startMusic();
+  $('battleCards').querySelector('button')?.focus({preventScroll:true});
 }
 
 function showVictoryScreen() {
@@ -426,15 +482,15 @@ async function spin() {
     $('spinText').textContent = `КРУТИТЬ — ${BET} ₸`;
     if (outcome.jackpot) {
       $('reels').classList.add('is-jackpot');
-      setMessage('ДЖЕКПОТ · ТРИ В РЯД', `+${outcome.payout.toLocaleString('ru-RU')} ₸`, 'Выплата ×5. Выигрыш зачислен на баланс.');
-      confetti(); finaleMusic();
+      setMessage('ДАРЫ ДЕВЯТИ', `+${outcome.payout.toLocaleString('ru-RU')} ₸`, 'Выплата ×5. Выигрыш зачислен на баланс.');
+      showBlessingBanner(); finaleMusic();
     } else {
       loseSound();
       setMessage(`ПРОИГРЫШ №${losses}`, INSULTS[(losses - 1) % INSULTS.length], `Минус ${BET} ₸. Осталось ${balance} ₸. Ещё разок?`);
     }
     if (outcome.outcome === 'complete') {
       if (!outcome.jackpot) setMessage('КОЛЛЕКЦИЯ СОБРАНА · 10 / 10', 'Все 10 карточек у тебя.');
-      $('collectionCopy').textContent = outcome.jackpot ? `Все 10 карточек теперь у тебя. И джекпот — +${outcome.payout.toLocaleString('ru-RU')} ₸!` : 'Все 10 карточек теперь у тебя.';
+      $('collectionCopy').textContent = outcome.jackpot ? `Все 10 карточек теперь у тебя. Дары Девяти — +${outcome.payout.toLocaleString('ru-RU')} ₸!` : 'Все 10 карточек теперь у тебя.';
       $('spinText').textContent = 'КОЛЛЕКЦИЯ СОБРАНА';
       showCollectionComplete();
     } else if (outcome.outcome === 'failed') {
@@ -453,7 +509,7 @@ async function spin() {
 
 function reset() {
   if (spinning) return;
-  transitionToken++;gameStage='slots';battleDefeated=false;BattleUI.stop();
+  transitionToken++;gameStage='slots';battleDefeated=false;BattleUI.stop();BossIntro.stop();
   stopMusic(); clearParty(); closeOverlay(photoOverlay);closeOverlay(collectionOverlay);closeOverlay(roundFailureOverlay);
   $('reels').classList.remove('is-jackpot');
   $('slotsScreen').hidden=false;$('battleScreen').hidden=true;$('victoryScreen').hidden=true;$('battleTransition').hidden=true;syncModalState();
