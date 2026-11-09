@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#151b1e">
+  <meta name="description" content="Артём [зачёркнуто] → Андрей. Нарочито передаренное Skyrim-казино ко дню рождения Андрея.">
+  <title>А̶р̶т̶ё̶м̶ → АНДРЕЙ | Skyrim 2 Royale</title>
+  <link rel="icon" href="assets/sigil.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="battle.css">
+  <script src="slot-engine.js" defer></script>
+  <script src="battle-engine.js" defer></script>
+  <script src="battle-ui.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="landscape" aria-hidden="true"></div>
+  <div class="mist mist-one" aria-hidden="true"></div>
+  <div class="mist mist-two" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div id="siteContent">
+    <div id="slotsScreen">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Андрей Royale — на главную">
+        <span class="brand-name"><s aria-hidden="true">ARTЁM</s><ins>АНДРЕЙ</ins></span>
+        <span class="brand-edition">ROYALE</span>
+      </a>
+      <div class="topbar-right"><span class="edition-label">ULTRA MEGA SUPER SPECIAL DEFINITIVE ULTIMATE REMASTERED ANNIVERSARY DELUXE DIRECTOR’S CUT GOTY EDITION</span><button class="sound-toggle" id="soundToggle" data-sound-toggle type="button" aria-label="Выключить звук" aria-pressed="true">ЗВУК: ВКЛ <span aria-hidden="true">♪</span></button></div>
+    </header>
+
+    <main class="wrap">
+      <div class="compass" aria-hidden="true"><span>W</span><i></i><b>◇</b><i></i><span>N</span><i></i><b>♜</b><i></i><span>E</span></div>
+      <section class="hero" aria-labelledby="birthdayTitle">
+        <div class="elder-line">THE ELDER SCROLLS</div>
+        <div class="skyrim-word" aria-hidden="true">SKYRIM 2</div>
+        <h1 id="birthdayTitle">С ДНЁМ РОЖДЕНИЯ,<br><span class="hero-name"><s aria-hidden="true">АРТЁМ!</s><ins>АНДРЕЙ!</ins></span></h1>
+        <p class="tag">Переходи на тёмную сторону, у нас есть плохишки.</p>
+      </section>
+
+      <section class="casino framed" aria-labelledby="machineTitle">
+        <div class="section-heading"><span class="ornament" aria-hidden="true">◆ ───</span><h2 id="machineTitle">СВЯТИЛИЩЕ НЕУДАЧИ</h2><span class="ornament" aria-hidden="true">─── ◆</span></div>
+        <div class="quest-line"><span class="quest-marker" aria-hidden="true">◇</span> ДОПОЛНИТЕЛЬНОЕ ЗАДАНИЕ: ПОПРОБОВАТЬ ВЫИГРАТЬ</div>
+        <div class="stats">
+          <div class="stat"><small>Баланс</small><strong id="balance">8 000 ₸</strong><div class="stat-meter balance-meter"><i id="balanceFill"></i></div></div>
+          <div class="stat"><small>Ставка</small><strong>800 ₸</strong><div class="stat-meter bet-meter"><i></i></div></div>
+          <div class="stat"><small>Осталось круток</small><strong id="spinsLeft">10</strong><div class="stat-meter loss-meter"><i id="spinsFill"></i></div></div>
+        </div>
+
+        <div class="machine">
+          <div class="machine-top"><span>◈</span><span>ДАРЫ ДОВАКИНА</span><span>◈</span></div>
+          <div class="reels" id="reels" aria-label="Три барабана с фотографиями Андрея">
+            <div class="reel"><div class="strip"></div><span class="reel-rune" aria-hidden="true">I</span></div>
+            <div class="reel"><div class="strip"></div><span class="reel-rune" aria-hidden="true">II</span></div>
+            <div class="reel"><div class="strip"></div><span class="reel-rune" aria-hidden="true">III</span></div>
+          </div>
+          <div class="machine-bottom">Наша задача — это разными схемами обмануть эту грёбаную ракетку.</div>
+        </div>
+
+        <div class="message" role="status" aria-live="polite" aria-atomic="true">
+          <div class="message-label" id="messageLabel">ЗАДАНИЕ НАЧАТО</div>
+          <div class="message-text" id="messageText">Ну что, <span class="name-swap"><s aria-hidden="true">Артём</s><ins>Андрей</ins></span>, крутанём?</div>
+          <div class="message-note" id="messageNote">Твои фотки. Твой праздник. ТВОЙ ШАБЛОН.</div>
+        </div>
+        <div class="actions"><button id="spin" class="spin" type="button"><span class="button-diamond" aria-hidden="true">◇</span><span id="spinText">КРУТИТЬ — 800 ₸</span><span class="button-diamond" aria-hidden="true">◇</span></button><button class="reset" id="reset" type="button" aria-label="Начать заново" title="Начать заново">↻</button></div>
+      </section>
+
+      <section class="inventory" aria-labelledby="inventoryTitle">
+        <div class="inventory-heading"><div><div class="eyebrow">КОЛЛЕКЦИЯ · ВЕС 0 · ЦЕННОСТЬ БЕСЦЕННО</div><h2 id="inventoryTitle">Инвентарь именинника</h2></div><span class="inventory-count" id="inventoryCount" aria-label="Найдено артефактов" aria-live="polite">0 / 10</span></div>
+        <div class="collection-quest"><span class="collection-quest-marker" aria-hidden="true">◇</span><div><strong>Собери все 10 карточек</strong></div><span id="collectionRemaining">Осталось найти: 10</span></div>
+        <div class="photo-grid" id="photoGrid"></div>
+      </section>
+      <footer class="page-footer"><span>СОЗДАНО СПЕЦИАЛЬНО ДЛЯ <s aria-hidden="true">АРТЁМА</s> <ins>АНДРЕЯ</ins></span></footer>
+    </main>
+    </div>
+
+    <section id="battleScreen" class="battle-screen" aria-label="Пошаговый бой с Продавцом говна" hidden>
+      <div class="battle-backdrop" aria-hidden="true"></div>
+      <div class="battle-shell">
+        <header class="battle-topline"><span class="battle-brand">SKYRIM 2</span><span>БОСС</span><div class="battle-top-right"><span id="battleTurn">ХОД 1</span><button class="sound-toggle" id="battleSoundToggle" data-sound-toggle type="button" aria-label="Выключить звук" aria-pressed="true">ЗВУК: ВКЛ <span aria-hidden="true">♪</span></button></div></header>
+        <div class="boss-arena">
+          <h1 class="boss-name" id="bossTitle">ПРОДАВЕЦ ГОВНА</h1>
+          <div class="health-bar boss-health" id="bossHealthBar" role="progressbar" aria-label="Здоровье Продавца говна" aria-valuemin="0" aria-valuemax="200" aria-valuenow="200"><i></i><span id="bossHealthText">200 / 200 HP</span></div>
+          <div class="boss-portrait" id="bossPortrait"><img src="assets/boss-merchant.png" alt="Продавец говна — босс из мема" width="604" height="433" draggable="false"><span class="portrait-tape tape-left" aria-hidden="true"></span><span class="portrait-tape tape-right" aria-hidden="true"></span></div>
+          <p class="boss-intent" id="bossIntent">Готовит: «Впарить товар»</p>
+          <div class="battle-defeat framed" id="battleDefeat" hidden><div class="eyebrow">ТВОЯ ИСТОРИЯ ЕЩЁ НЕ ЗАКОНЧЕНА</div><h2>Продавец тебя развёл.</h2><p>Карточки остаются с тобой. Соберись и врежь ему ещё раз.</p><button id="retryBattle" class="popup-action" type="button">ПОПРОБОВАТЬ ЕЩЁ РАЗ</button></div>
+        </div>
+        <div class="combat-statusbar"><div class="hero-status" id="heroStatus"><strong>АНДРЕЙ</strong><div class="health-bar hero-health" id="heroHealthBar" role="progressbar" aria-label="Здоровье Андрея" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i></i><span id="heroHealthText">100 / 100 HP</span></div></div><div class="battle-status" id="battleStatus" role="status" aria-live="polite">ВАШ ХОД</div><span class="battle-collection">КОЛЛЕКЦИЯ <b>10 / 10</b></span></div>
+        <p class="deck-heading">ТВОИ КАРТОЧКИ — ТВОИ ЗАКЛИНАНИЯ</p>
+        <div class="battle-cards" id="battleCards" aria-label="Карточки заклинаний"></div>
+        <div class="combat-log" id="combatLog" role="log" aria-live="polite" aria-relevant="additions text"></div>
+      </div>
+    </section>
+
+    <section class="victory-screen" id="victoryScreen" aria-labelledby="victoryTitle" hidden>
+      <div class="victory-art" aria-hidden="true"></div>
+      <header class="victory-topline"><span class="battle-brand">SKYRIM 2</span><button class="sound-toggle" id="victorySoundToggle" data-sound-toggle type="button" aria-label="Выключить звук" aria-pressed="true">ЗВУК: ВКЛ <span aria-hidden="true">♪</span></button></header>
+      <div class="victory-copy"><div class="victory-kicker">◇ &nbsp; ЗАДАНИЕ ВЫПОЛНЕНО &nbsp; ◇</div><h1 id="victoryTitle" tabindex="-1">Победив Продавца говна, ты достиг <span>чекпоинта.</span></h1><p class="victory-subtitle">Очередной цикл пройден, впереди новые свершения.</p><div class="victory-next"><span>СЛЕДУЮЩАЯ ЦЕЛЬ</span><strong>Чёрный пёс и <b>6 Б</b></strong></div><p class="victory-birthday">С днём рождения, Андрей!</p><button id="adventureAgain" class="victory-again" type="button">СЫГРАТЬ ЗАНОВО</button></div>
+    </section>
+  </div>
+
+  <div id="confetti" class="confetti" aria-hidden="true"></div>
+
+  <div class="overlay" id="welcomeOverlay" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" aria-describedby="welcomeAside">
+    <div class="popup framed">
+      <img class="sigil" src="assets/sigil.svg" width="64" height="90" alt="" aria-hidden="true">
+      <div class="popup-kicker">ПЕРЕД НАЧАЛОМ ПУТЕШЕСТВИЯ</div>
+      <p class="welcome-aside" id="welcomeAside">Эй, ты. Наконец-то проснулся.</p>
+      <div class="popup-rule" aria-hidden="true">──── ◇ ────</div>
+      <h2 class="welcome-question" id="welcomeTitle">Как думаете, американцы смогли бы крутить эти слоты без антидепрессантов?</h2>
+      <div class="popup-brand"><s aria-hidden="true">ARTЁM</s><ins>АНДРЕЙ</ins> ROYALE</div>
+      <div class="welcome-quest"><span>ТВОЯ ЦЕЛЬ</span><strong>Собери все 10 карточек в слотах.</strong></div>
+      <button id="welcomeGo" class="popup-action" type="button">◇ &nbsp; ПОНЯЛ, КРУТИТЬ &nbsp; ◇</button>
+      <div class="popup-footnote">Новая игра · сложность: день рождения</div>
+    </div>
+  </div>
+
+  <div class="overlay collection-overlay" id="collectionOverlay" role="dialog" aria-modal="true" aria-labelledby="collectionTitle" aria-describedby="collectionCopy" hidden><div class="collection-popup framed"><div class="popup-kicker">ЗАДАНИЕ ВЫПОЛНЕНО · КОЛЛЕКЦИЯ 10 / 10</div><h2 id="collectionTitle">Вы собрали все карточки!</h2><p id="collectionCopy">Все 10 карточек теперь у тебя.</p><div class="collection-complete-grid" id="collectionCompleteGrid"></div><button id="enterBattle" class="popup-action" type="button">◇ &nbsp; ПРОДОЛЖИТЬ &nbsp; ◇</button></div></div>
+  <div class="battle-transition" id="battleTransition" role="status" aria-live="assertive" tabindex="-1" hidden><img src="assets/sigil.svg" alt="" width="70" height="100"><div class="transition-kicker">КОЛЛЕКЦИЯ СОБРАНА · 10 / 10</div><h2>Не все долги<br>измеряются в тенге.</h2><p>ЗАДАНИЕ ОБНОВЛЕНО</p><div class="transition-line" aria-hidden="true"><i></i></div></div>
+
+  <div class="overlay round-failure-overlay" id="roundFailureOverlay" role="dialog" aria-modal="true" aria-labelledby="roundFailureTitle" aria-describedby="roundFailureCopy" hidden>
+    <div class="round-failure-popup framed">
+      <div class="popup-kicker">ПОПЫТКИ ЗАКОНЧИЛИСЬ</div>
+      <h2 id="roundFailureTitle">Молодец, давай заново</h2>
+      <img class="round-failure-photo" src="assets/retry-andrey.jpg" width="4000" height="3000" alt="Андрей показывает большой палец" draggable="false">
+      <p id="roundFailureCopy">Собрано карточек: 0 / 10.</p>
+      <button id="retrySlots" class="popup-action" type="button">◇ &nbsp; НАЧАТЬ ЗАНОВО &nbsp; ◇</button>
+    </div>
+  </div>
+
+  <div class="overlay photo-overlay" id="photoOverlay" role="dialog" aria-modal="true" aria-label="Артефакт из инвентаря" hidden>
+    <div class="photo-viewer framed"><button id="closePhoto" class="close-photo" type="button" aria-label="Закрыть фотографию">✕</button><img id="fullPhoto" alt=""><div id="photoCaption"></div></div>
+  </div>
+</body>
+</html>
