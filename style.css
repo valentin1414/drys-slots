@@ -4,6 +4,8 @@
 .unknown-photo{height:145px;width:100%;background:#000}.photo-card.is-locked{background:#080b0d;border-color:#65716d30;cursor:default}.photo-card.is-locked .photo-card-label{color:#68746d}.photo-card.is-locked .photo-card-label span:last-child{color:#68746d}.photo-card.is-locked:hover{transform:none;border-color:#65716d30}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.mist{transform:none}}
 
+/* Keep the fixed scenery inside the page stacking context, above its base color. */
+body{isolation:isolate}
 /* Desktop revision: long edition title and a clear welcome-message hierarchy. */
 .blessing-banner{position:fixed;z-index:55;top:44%;left:0;right:0;height:210px;display:flex;align-items:center;justify-content:center;pointer-events:none;background:linear-gradient(90deg,transparent,#080604d9 15%,#040302ed 50%,#080604d9 85%,transparent);opacity:0}
 .blessing-banner:before,.blessing-banner:after{content:'';position:absolute;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,#d3ad5947,transparent)}
